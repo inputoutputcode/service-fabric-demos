@@ -28,16 +28,20 @@ Video: https://www.youtube.com/watch?v=yb7DxVuR0DU TODO
 
 ## Showcases
 
-The dashboard in the custom app to see memory usage real time.
+The dashboard in the custom app to see memory usage real time:
+
 ![Memory usage monitoring dashboard in the custom app](_images/memory-dashboard.jpg)
 
-The data in SFX for the memory usage threshold warning. In this case the application MemoryEater eats more than 600MB.
+The data in SFX for the memory usage threshold warning. In this case the application MemoryEater eats more than 600MB:
+
 ![Memory usage threshold warning in SFX](_images/memory-usage-threshold-warning.jpg)
 
-The telemetry data in Azure Application Insights, querying the weekly average in dashboard.
+The telemetry data in Azure Application Insights, querying the weekly average in dashboard:
+
 ![Telemetry for average and dashboard](_images/memory-avg.jpg)
 
-The telemetry data in Azure Application Insights, showing the real memory usage in relation to resource governance policy.
+The telemetry data in Azure Application Insights, showing the real memory usage in relation to resource governance policy: 
+
 ![Telemetry dashboard for real usage compared to resource governance policy](_images/memory-threshold-usage.jpg)
 
 ## Kusto queries
@@ -45,23 +49,23 @@ The telemetry data in Azure Application Insights, showing the real memory usage 
 Query to show memory usage agains resource governance policy:
 ```
 customEvents 
-| where customDimensions["ApplicationTypeName"] == "MemoryEaterAppType"
-| where customDimensions["Metric"] == "RG Memory Usage (Percent)"
-| extend memoryRGLimit = toint(customDimensions["RGMemoryLimitMb"])
-| extend memoryRGPercentageInMB = toint(todecimal(customMeasurements["RG Memory Usage (Percent)"]) / 100 * memoryRGLimit)
+| where customDimensions['ApplicationTypeName'] == 'MemoryEaterAppType'
+| where customDimensions['Metric'] == 'RG Memory Usage (Percent)'
+| extend memoryRGLimit = toint(customDimensions['RGMemoryLimitMb'])
+| extend memoryRGPercentageInMB = toint(todecimal(customMeasurements['RG Memory Usage (Percent)']) / 100 * memoryRGLimit)
 | project timestamp, memoryRGPercentageInMB, memoryRGLimit
-| render timechart 
+| render timechart
 ```
 
 Query to show average memory usage over certain time for threshold evaluation:
 ```
 customEvents 
-| where customDimensions["ApplicationTypeName"] == "MemoryEaterAppType"
-| where customDimensions["Metric"] == "Memory Usage (MB)"
-| extend memoryValue = toint(customMeasurements["Memory Usage (MB)"])
+| where customDimensions['ApplicationTypeName'] == 'MemoryEaterAppType'
+| where customDimensions['Metric'] == 'Memory Usage (MB)'
+| extend memoryValue = toint(customMeasurements['Memory Usage (MB)'])
 | summarize avg(memoryValue) by timestamp
-| render timechart       
-``` 
+| render timechart
+```
 
 ## Questions
 

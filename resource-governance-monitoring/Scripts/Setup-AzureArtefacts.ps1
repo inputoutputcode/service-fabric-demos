@@ -103,14 +103,15 @@ if (-Not [System.IO.File]::Exists($destination)) {
     Invoke-WebRequest -Uri $source -OutFile $destination
 }
 
-.\nuget.exe restore MemoryEater.sln
+.\nuget.exe restore ..\MemoryEater.sln
 
  # Build deployment package for FabricObserver 
 Write-Host "Log: Build FabricObserver application, option local build"
-dotnet publish "..\FabricObserver\FabricObserverApp\FabricObserverApp.sfproj" -c "Debug" -r win-x64 --self-contained true
+$releaseMode = "Debug"
+dotnet publish "..\FabricObserver\FabricObserverApp\FabricObserverApp.sfproj" -c $releaseMode -r win-x64 --self-contained true
 
 Write-Host "Log: Create one deployment file for FabricObserver application, option pre-built app folder" -ForegroundColor Green
-$fabricObserverPackagePath = "..\FabricObserver\FabricObserverApp\pkg\Release\*"
+$fabricObserverPackagePath = "..\FabricObserver\FabricObserverApp\pkg\$releaseMode\*"
 $fabricObserverDestinationFile = "FabricObserver.Windows.SelfContained.3.2.4.831"
 $fabricObserverDestinationPath = "..\FabricObserver\Release\"
 $fabricObserverDestinationFileZip = $fabricObserverDestinationPath + ".zip"
