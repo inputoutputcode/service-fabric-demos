@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{7BC6991F-C840-413E-B1CD-4025947CF5FA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FabricObserver.TelemetryLib</RootNamespace>
+    <AssemblyName>TelemetryLib</AssemblyName>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Copyright>Copyright ©  2022</Copyright>
+    <Product>TelemetryLib</Product>
+    <Platforms>x64</Platforms>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="ITelemetryEventSource.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="FOAppInsightsOperational.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
+	<PackageReference Include="Microsoft.ServiceFabric.Services" Version="5.0.516" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<Platforms>x64</Platforms>
+		<RootNamespace>FabricObserver</RootNamespace>
+		<Copyright>Copyright © 2022</Copyright>
+		<Product>FabricObserver</Product>
+		<Version>3.2.4</Version>
+		<FileVersion>3.2.4</FileVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Utilities\MemoryUsage\**" />
+		<EmbeddedResource Remove="Utilities\MemoryUsage\**" />
+		<None Remove="Utilities\MemoryUsage\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Remove="MachineInfoModel\ConfigSettings.cs" />
+		<Compile Remove="MachineInfoModel\ConfigurationSetting.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.21.0" />
+		<PackageReference Include="Microsoft.ApplicationInsights.PerfCounterCollector" Version="2.21.0" />
+		<PackageReference Include="Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel" Version="2.21.0" />
+		<PackageReference Include="Microsoft.ApplicationInsights.WindowsServer" Version="2.21.0" />
+		<PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
+		<PackageReference Include="Microsoft.ApplicationInsights.NLogTarget" Version="2.21.0" />
+		<PackageReference Include="Microsoft.ServiceFabric.Services" Version="5.0.516" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+		<PackageReference Include="NLog" Version="5.1.0" />
+		<PackageReference Include="System.Management" Version="6.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\TelemetryLib\TelemetryLib.csproj" />
+	</ItemGroup>
+</Project>

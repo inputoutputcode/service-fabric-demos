@@ -1,0 +1,27 @@
+[
+  {
+    "targetApp": "fabric:/MyApp0",
+    "endpoints": [
+      {
+        "hostname": "https://myazuresrvice42.westus2.cloudapp.azure.com",
+        "port": 443,
+        "protocol": "http"
+      },
+      {
+        "hostname": "https://mycosmosdb.documents.azure.com/dbs/mydb",
+        "port": 443,
+        "protocol": "http"
+      }
+    ]
+  },
+  {
+    "targetApp": "fabric:/MyApp1",
+    "endpoints": [
+      {
+        "hostname": "somesqlservername.database.windows.net",
+        "port": 1433,
+        "protocol": "tcp"
+      }
+    ]
+  }
+]

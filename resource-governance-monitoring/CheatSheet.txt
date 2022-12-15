@@ -1,0 +1,76 @@
+# Clone repository
+
+Clone the repository with: git clone https://github.com/inputoutputcode/service-fabric-demos.git
+Open the folder "resource-governance-monitoring/Scripts" in PowerShell.
+
+
+# Execute deployment
+
+Execute: .\All-In-One-Setup-Scenario.ps1 (15 mins in avg)
+https://learn.microsoft.com/en-us/powershell/azure/install-az-ps
+
+Explaining each section of the script.
+Simple production-ready cluster. 
+Self-signed certificate (valid for 30 days) is installed locally to authenticate with the browser to SFX.
+Using managed disks to enable deallocation of VMs to save some costs in case of demo pre-preparation.
+Build and packaging for the apps
+Adding the connection string for Application Insights to FabricObserver (Settings.xml)
+Creating a storage account with container for artefacts, uploading the app files, generating a SAS token for ARM application resource deployment.
+
+# Explain configuration
+
+Visualize Azure artefacts?
+
+Copied Fabric Observer
+Settings.xml
+•	EnableTelemetryProvider
+•	TelemetryProvider
+•	AppInsightsConnectionString
+
+AppObserver.config.json
+•	warningRGMemoryLimitPercent
+
+Credits: https://github.com/microsoft/service-fabric-observer
+
+Copied memoryleak
+
+Changed the API
+Changed the port to 8081 according to NSG
+
+Credits: https://github.com/sebastienros/memoryleak
+
+
+# Demo the resource governance monitoring
+
+Open SFX to check health of cluster and apps
+Example for URL: https://demo130904cluster.westus.cloudapp.azure.com:19080/Explorer/index.html
+
+Open dashboard to show measurement
+Example for URL: http://demo130904cluster.westus.cloudapp.azure.com:8081
+
+Open API in browser to increase memory usage
+Example for URL: http://demo130904cluster.westus.cloudapp.azure.com:8081/api/addstring/1000
+
+By reaching 600 MB of memory FabricObserver should generate a warning in SFX about reaching 60% of the resource governance policy.
+
+By reaching 1000 MB of memory you should see a OutOfMemoryException.
+
+Open the URL for Application Insights to query the telemetry data, with enough data you get average memory consumption. 
+
+Query to show memory usage agains resource governance policy:
+customEvents 
+| where customDimensions["ApplicationTypeName"] == "MemoryEaterAppType"
+| where customDimensions["Metric"] == "RG Memory Usage (Percent)"
+| extend memoryRGLimit = toint(customDimensions["RGMemoryLimitMb"])
+| extend memoryRGPercentageInMB = toint(todecimal(customMeasurements["RG Memory Usage (Percent)"]) / 100 * memoryRGLimit)
+| project timestamp, memoryRGPercentageInMB, memoryRGLimit
+| render timechart 
+
+Query to show average memory usage over certain time for threshold evaluation:
+customEvents 
+| where customDimensions["ApplicationTypeName"] == "MemoryEaterAppType"
+| where customDimensions["Metric"] == "Memory Usage (MB)"
+| extend memoryValue = toint(customMeasurements["Memory Usage (MB)"])
+| summarize avg(memoryValue) by timestamp
+| render timechart       
+ 
