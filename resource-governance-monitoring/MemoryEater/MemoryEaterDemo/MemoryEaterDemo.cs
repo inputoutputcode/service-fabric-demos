@@ -53,6 +53,8 @@ namespace MemoryEaterDemo
                         app.MapRazorPages();
                         app.MapControllers();
 
+                        app.UseDeveloperExceptionPage();
+
                         return app;
                     }))
             };

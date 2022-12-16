@@ -4,9 +4,11 @@
 
 FabricObserver 3.2.2 newest features adds notifications and telemetry for processes going over a percentage of the resource governance policy in Service Fabric.
 
-Demo
-- Telemetry shows average memory usage of processes in relation to resource governance policy
-- Alerts for when the memory usage goes of a certain percentage 
+## Demos 
+
+- Alerting for when the memory usage goes over a certain percentage of the resource governance 
+- Telemetry shows average memory usage of processes in relation to resource governance 
+- OutOfMemoryException in the case where the memory usage reaches the limit of resource governance  
 
 Video: https://www.youtube.com/watch?v=yb7DxVuR0DU TODO
 
@@ -37,17 +39,13 @@ The data in SFX for the memory usage threshold warning. In this case the applica
 
 ![Memory usage threshold warning in SFX](_images/memory-usage-threshold-warning.jpg)
 
-The telemetry data in Azure Application Insights, querying the weekly average in dashboard:
-
-![Telemetry for average and dashboard](_images/memory-avg.jpg)
-
 The telemetry data in Azure Application Insights, showing the real memory usage in relation to resource governance policy: 
 
 ![Telemetry dashboard for real usage compared to resource governance policy](_images/memory-threshold-usage.jpg)
 
-## Kusto queries
+## Kusto query
 
-Query to show memory usage agains resource governance policy:
+Query to show memory usage against resource governance policy:
 ```
 customEvents 
 | where customDimensions['ApplicationTypeName'] == 'MemoryEaterAppType'
@@ -55,16 +53,6 @@ customEvents
 | extend memoryRGLimit = toint(customDimensions['RGMemoryLimitMb'])
 | extend memoryRGPercentageInMB = toint(todecimal(customMeasurements['RG Memory Usage (Percent)']) / 100 * memoryRGLimit)
 | project timestamp, memoryRGPercentageInMB, memoryRGLimit
-| render timechart
-```
-
-Query to show average memory usage over certain time for threshold evaluation:
-```
-customEvents 
-| where customDimensions['ApplicationTypeName'] == 'MemoryEaterAppType'
-| where customDimensions['Metric'] == 'Memory Usage (MB)'
-| extend memoryValue = toint(customMeasurements['Memory Usage (MB)'])
-| summarize avg(memoryValue) by timestamp
 | render timechart
 ```
 
