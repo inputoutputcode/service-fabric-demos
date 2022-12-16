@@ -112,8 +112,8 @@ Write-Host "Log: Create one deployment file for FabricObserver application, opti
 $fabricObserverPackagePath = "..\FabricObserver\FabricObserverApp\pkg\$releaseMode\*"
 $fabricObserverDestinationFile = "FabricObserver.Windows.SelfContained.3.2.4.831"
 $fabricObserverDestinationPath = "..\FabricObserver\Release\"
-$fabricObserverDestinationFileZip = $fabricObserverDestinationPath + ".zip"
-$fabricObserverDestinationFileSfpgk = $fabricObserverDestinationPath + ".sfpkg"
+$fabricObserverDestinationFileZip = $fabricObserverDestinationPath + $fabricObserverDestinationFile + ".zip"
+$fabricObserverDestinationFileSfpgk = $fabricObserverDestinationPath + $fabricObserverDestinationFile + ".sfpkg"
 New-Item -Path "..\FabricObserver" -Name "Release" -ItemType "Directory" -ErrorAction SilentlyContinue
 Compress-Archive -Path $fabricObserverPackagePath -DestinationPath $fabricObserverDestinationFileZip -Update
 Move-Item -Path $fabricObserverDestinationFileZip -Destination $fabricObserverDestinationFileSfpgk -Force
