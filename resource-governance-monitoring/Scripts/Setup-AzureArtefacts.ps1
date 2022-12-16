@@ -94,15 +94,13 @@ $element.SetAttribute("Value", $aiConnectionString)
 $xml.Save($settingsFileInfo.FullName)
 
 # NuGet restore for Microsoft.VisualStudio.Azure.Fabric.MSBuild.1.7.6
+Write-Host "Log: Install nuget.exe for package restore"
 $source = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-# Save file to top level directory in repo
 $destination = "nuget.exe"
-
 if (-Not [System.IO.File]::Exists($destination)) {
     #Download the file
     Invoke-WebRequest -Uri $source -OutFile $destination
 }
-
 .\nuget.exe restore ..\MemoryEater.sln
 
  # Build deployment package for FabricObserver 
