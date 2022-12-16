@@ -17,14 +17,15 @@ Video: https://www.youtube.com/watch?v=yb7DxVuR0DU TODO
 ## How to demo
 
 1. Clone the repository with: git clone https://github.com/inputoutputcode/service-fabric-demos.git
-2. Open the folder "resource-governance-monitoring/Scripts" in PowerShell.
-3. Execute: .\01-Setup-AzureArtefacts.ps1 (15 mins in avg).
-4. Open the URL of SFX copied from PowerShell (example: https://demo130904cluster.westus.cloudapp.azure.com:19080/Explorer/index.html).
-5. Open the URL to the dashboard copied from PowerShell (example: http://demo130904cluster.westus.cloudapp.azure.com:8081).
-6. Execute the URL for the API in web browers a couple of times to see the memory increase in dashboard (example: http://demo130904cluster.westus.cloudapp.azure.com:8081/api/staticstrings/1000)
-7. By reaching 600 MB of memory FabricObserver should generate a warning in SFX about reaching 60% of the resource governance policy.
-8. By reaching 1000 MB of memory you should see a OutOfMemoryException.
-9. Open the URL for Application Insights to query the telemetry data, with enough data you get average memory consumption. Queries below.
+1. Open the folder "resource-governance-monitoring/Scripts" in PowerShell.
+1. Edit the file 01-Setup-AzureArtefacts.ps1 to provide your Azure subscription ID, RDP user account, and password for the certificate. You only need to edit the four parameters at the top of the file.
+1. Execute: .\01-Setup-AzureArtefacts.ps1 (15 mins in avg).
+1. Open the URL of SFX copied from PowerShell (example: https://demo130904cluster.westus.cloudapp.azure.com:19080/Explorer/index.html).
+1. Open the URL to the dashboard copied from PowerShell (example: http://demo130904cluster.westus.cloudapp.azure.com:8081).
+1. Execute the URL for the API in web browers a couple of times to see the memory increase in dashboard (example: http://demo130904cluster.westus.cloudapp.azure.com:8081/api/staticstrings/1000)
+1. By reaching 600 MB of memory FabricObserver should generate a warning in SFX about reaching 60% of the resource governance policy.
+1. By reaching 1000 MB of memory you should see a OutOfMemoryException.
+1. Open the URL for Application Insights to query the telemetry data, with enough data you get average memory consumption. Queries below.
 
 ## Showcases
 
