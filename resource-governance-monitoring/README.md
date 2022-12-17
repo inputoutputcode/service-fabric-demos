@@ -10,7 +10,7 @@ FabricObserver 3.2.2 newest features adds notifications and telemetry for proces
 - Telemetry shows average memory usage of processes in relation to resource governance 
 - OutOfMemoryException in the case where the memory usage reaches the limit of resource governance  
 
-Video: https://www.youtube.com/watch?v=yb7DxVuR0DU TODO
+Video: [Resource Governance Monitoring on Azure Service Fabric - YouTube](https://www.youtube.com/watch?v=0fmphG1NCzg)
 
 ## Scenario configuration
 
